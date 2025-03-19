@@ -6,16 +6,12 @@ import { BiLogoTypescript, BiLogoTailwindCss } from "react-icons/bi";
 import { SiVitess, SiVercel } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
 
-type TechStackProps = {
-  title: string;
-};
-
 type TechStackIcon = {
   title: string;
   icon: React.ReactNode;
 };
 
-const sizeIcons: number = 40;
+const sizeIcons: number = 35;
 
 const techStackIcons: TechStackIcon[] = [
   { title: 'HTML', icon: <FaHtml5 size={sizeIcons} color='orange'/> },
@@ -23,32 +19,40 @@ const techStackIcons: TechStackIcon[] = [
   { title: 'JavaScript', icon: <FaJsSquare size={sizeIcons} color='yellow'/> },
   { title: 'TypeScript', icon: <BiLogoTypescript size={sizeIcons} color='blue'/> },
   { title: 'Tailwind CSS', icon: <BiLogoTailwindCss size={sizeIcons} color='blue'/> },
-  { title: 'Vite', icon: <SiVitess size={sizeIcons} /> },
-  { title: 'Framer Motion', icon: <TbBrandFramerMotion size={sizeIcons} /> },
-  { title: 'Vercel', icon: <SiVercel size={sizeIcons} /> },
-  { title: 'Github', icon: <FaGithubSquare size={sizeIcons} /> },
+  { title: 'Vite', icon: <SiVitess size={sizeIcons} color='pink' /> },
+  { title: 'Framer Motion', icon: <TbBrandFramerMotion size={sizeIcons} color='yellow'/> },
+  { title: 'Vercel', icon: <SiVercel size={sizeIcons} color='white'/> },
+  { title: 'Github', icon: <FaGithubSquare size={sizeIcons} color='orange'/> },
 ];
 
-const TechStack = ({ title }: TechStackProps) => {
+const TechStack = () => {
     const constraintsRef = useRef<HTMLDivElement>(null)
   return (
+    <>
+      <div className='w-[100%]'>
+      
       <motion.div 
       ref={constraintsRef}
-      className="w-[30rem] h-[18rem] grid grid-cols-3 p-7">
+      className="w-[30rem] h-[18rem] grid grid-cols-3 gap-5 py-[5%] pr-[20%] pl-[20%]">
         {techStackIcons.map((icon, index) => (
           <motion.div
             ref={constraintsRef}
             key={index}
-            className="flex items-center justify-center cursor-pointer gap-2 bg-white rounded-lg"
+            className="flex items-center justify-center cursor-pointer bg-[#000000] rounded-lg"
             drag
             dragConstraints={constraintsRef}
             dragElastic={0.2}
           >
+            
                 {icon.icon}
             
           </motion.div>
+          
         ))}
       </motion.div>
+      </div>
+    </>
+    
   );
 };
 
