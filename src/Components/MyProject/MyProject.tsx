@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import product1 from '../../assets/ecomerse.png'
 import product2 from '../../assets/monlist.png'
 import product3 from '../../assets/addu2.png'
@@ -8,38 +8,85 @@ import product5 from '../../assets/clever.png'
 import product6 from '../../assets/absentTracker.png'
 import product7 from '../../assets/lastTaker.png'
 
+const Text = () =>
+  'Projects'.split('').map((text, index) => (
+    <motion.h1
+      key={index}
+      initial={{ opacity: 0, x: -30 }}
+      animate={{
+        opacity: 1,
+        x: 0,
+        transition: {
+          duration: 1 + index * 0.5,
+          easings: 'ease',
+        },
+      }}
+      className="flex justify-end text-[2rem] font-bold"
+    >
+      {text}
+    </motion.h1>
+  ))
+
+const Content = () => {
+  const products1: string[] = [
+    product7,
+    product6,
+    product3,
+    product4,
+    product5,
+    product1,
+    product2,
+  ]
+
+  const [currentIndex, setCurrentIndex] = useState<number>(0)
+
+  // Change the image every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % products1.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="w-[25rem] h-[25rem] rounded-lg overflow-hidden relative">
+      {/* First Image from products1 */}
+      <motion.div
+        className="absolute inset-0 flex justify-center items-center"
+        key={currentIndex}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <img
+          src={products1[currentIndex]}
+          alt={`product1 ${currentIndex}`}
+          className="w-full h-full object-cover"
+        />
+      </motion.div>
+    </div>
+  )
+}
+
 const MyProject = () => {
-    const products1: string[] = [product7, product6, product3, product4, product5, product1, product2]
+  const [showText, setShowText] = useState(false)
 
-    const [currentIndex, setCurrentIndex] = useState<number>(0)
-
-    // Change the image every 3 seconds
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentIndex(prevIndex => (prevIndex + 1) % products1.length)
-        }, 3000)
-        return () => clearInterval(interval)
-    }, [])
-
-    return (
-        <div className='w-[25rem] h-[25rem] rounded-lg overflow-hidden relative'>
-            {/* First Image from products1 */}
-            <motion.div
-                className='absolute inset-0 flex justify-center items-center'
-                key={currentIndex}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
-            >
-                <img
-                    src={products1[currentIndex]}
-                    alt={`product1 ${currentIndex}`}
-                    className='w-full h-full object-cover'
-                />
-            </motion.div>
-        </div>
-    )
+  return (
+    <motion.div
+      onHoverStart={() => {
+        setShowText(true)
+      }}
+      className="cursor-pointer"
+    >
+      <div className="flex flex-row-reverse absolute left-[77rem] text-white font-mono">
+        <div>{showText && <Text />}</div>
+      </div>
+      <div className="cursor-pointer rounded-lg">
+        <Content />
+      </div>
+    </motion.div>
+  )
 }
 
 export default MyProject

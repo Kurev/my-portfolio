@@ -1,18 +1,11 @@
 type AboutProps = {
-  title: string;
-  paragraph: string;
-};
+  title: string
+  paragraph: string
+}
 
 const About = ({ title, paragraph }: AboutProps) => {
   return (
-    <div
-      onMouseEnter={() => {
-        handleHoverStart("about");
-        handleContainerStart("about");
-      }}
-      onMouseLeave={() => handleHoverEnd("about")}
-      className="flex flex-col gap-2.5 p-5"
-    >
+    <div className="flex flex-col gap-2.5 p-5">
       <h1 className="text-[5rem]  text-[#a280fd] font-extrabold font-mono text-center">
         {title}
       </h1>
@@ -23,7 +16,7 @@ const About = ({ title, paragraph }: AboutProps) => {
         Lives in: Davao City, Philippines
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default About;
+export default About
