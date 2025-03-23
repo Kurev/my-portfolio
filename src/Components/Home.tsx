@@ -1,6 +1,6 @@
 import TechStackImg from '../assets/techstack1.png'
 import About from './About/About'
-import TectStack from './TechStack/TectStack'
+import TechStack from './TechStack/TechStack'
 import Contact from './Contact/Contact'
 import MyProject from './MyProject/MyProject'
 
@@ -47,7 +47,7 @@ const Home = () => {
             height: '18rem',
           }}
         >
-          <TectStack />
+          <TechStack />
         </div>
       </div>
 
