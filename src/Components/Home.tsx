@@ -1,5 +1,4 @@
 import { useState } from "react";
-import AboutImg from "../assets/about.png";
 import TechStackImg from "../assets/techstack1.png";
 import About from "./About/About";
 import { motion } from "framer-motion";
@@ -157,7 +156,6 @@ const Home = () => {
                 "Projects".split("").map((text, index) => (
                   <motion.h1
                     key={index}
-                    // TODO: customizability with functions per index
                     initial={{ opacity: 0, x: -30 }}
                     animate={{
                       opacity: 1,
