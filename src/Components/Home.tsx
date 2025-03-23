@@ -1,5 +1,4 @@
 import { useState } from "react";
-import AboutImg from "../assets/about.png";
 import TechStackImg from "../assets/techstack1.png";
 import About from "./About/About";
 import { motion } from "framer-motion";
@@ -82,17 +81,16 @@ const Home = () => {
     }));
   };
 
-  const showMyTechStack = container.techStack.isHovered || container.techStack.hasBeenHovered;
-  const showProjects = container.projects.isHovered || container.projects.hasBeenHovered;
+  const showMyTechStack =
+    container.techStack.isHovered || container.techStack.hasBeenHovered;
+  const showProjects =
+    container.projects.isHovered || container.projects.hasBeenHovered;
 
   return (
     <div className="w-full h-svh flex items-center justify-center bg-[#000000] gap-2.5">
       <div className="flex flex-col gap-2.5">
         {/* (About Section) */}
-        <div
-          
-          className="w-[30rem] h-[18rem] cursor-pointer border border-[#bb8ce4] rounded-3xl bg-gradient-to-t from-[#bb8ce49a] via-[#000000] to-[#000000] opacity-50 hover:bg-gradient-to-b hover:from-[#c69bebe5] hover:duration-500 transform hover:scale-95 hover:opacity-80 transition-all ease-in-out"
-        >
+        <div className="w-[30rem] h-[18rem] cursor-pointer border border-[#bb8ce4] rounded-3xl bg-gradient-to-t from-[#bb8ce49a] via-[#000000] to-[#000000] opacity-50 hover:bg-gradient-to-b hover:from-[#c69bebe5] hover:duration-500 transform hover:scale-95 hover:opacity-80 transition-all ease-in-out">
           <About
             title="ABOUT ME"
             paragraph="I am a 2nd-year BSIT student at Ateneo de Davao University, specializing in frontend development"
@@ -118,45 +116,24 @@ const Home = () => {
             className="w-full h-full flex items-center justify-center rounded-lg bg-[#02031145] backdrop-blur-sm"
           >
             <div className="text-white font-mono flex flex-col absolute -left-[9rem]">
-              {showMyTechStack && (
-                <motion.h1
-                  initial={{ opacity: 0, x: 15 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    transition: { duration: 1, easings: "ease" },
-                  }}
-                  className="flex justify-end text-[3rem] font-bold"
-                >
-                  My
-                </motion.h1>
-              )}
-              {showMyTechStack && (
-                <motion.h1
-                  initial={{ opacity: 0, x: 15 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    transition: { duration: 1.5, easings: "ease" },
-                  }}
-                  className="flex justify-end text-[3rem] font-bold"
-                >
-                  Tech
-                </motion.h1>
-              )}
-              {showMyTechStack && (
-                <motion.h1
-                  initial={{ opacity: 0, x: 15 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    transition: { duration: 2, easings: "ease" },
-                  }}
-                  className="flex justify-end text-[3rem] font-bold"
-                >
-                  Stack
-                </motion.h1>
-              )}
+              {showMyTechStack &&
+                "My Tech Stack".split(" ").map((text, index) => (
+                  <motion.h1
+                    key={index}
+                    initial={{ opacity: 0, x: 15 }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                      transition: {
+                        duration: 1 + index * 0.5,
+                        easings: "ease",
+                      },
+                    }}
+                    className="flex justify-end text-[3rem] font-bold"
+                  >
+                    {text}
+                  </motion.h1>
+                ))}
             </div>
             <TectStack />
           </motion.div>
@@ -175,110 +152,24 @@ const Home = () => {
         >
           <div className="flex flex-row-reverse absolute left-[77rem] text-white font-mono">
             <div>
-              {showProjects && (
-                <motion.h1
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    transition: { duration: 1, easings: "ease" },
-                  }}
-                  className="flex justify-end text-[2rem] font-bold"
-                >
-                  P
-                </motion.h1>
-              )}
-              {showProjects && (
-                <motion.h1
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    transition: { duration: 1.5, easings: "ease" },
-                  }}
-                  className="flex justify-end text-[2rem] font-bold"
-                >
-                  r
-                </motion.h1>
-              )}
-              {showProjects && (
-                <motion.h1
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    transition: { duration: 2, easings: "ease" },
-                  }}
-                  className="flex justify-end text-[2rem] font-bold"
-                >
-                  o
-                </motion.h1>
-              )}
-              {showProjects && (
-                <motion.h1
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    transition: { duration: 2.5, easings: "ease" },
-                  }}
-                  className="flex justify-end text-[2rem] font-bold"
-                >
-                  j
-                </motion.h1>
-              )}
-              {showProjects && (
-                <motion.h1
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    transition: { duration: 3, easings: "ease" },
-                  }}
-                  className="flex justify-end text-[2rem] font-bold"
-                >
-                  e
-                </motion.h1>
-              )}
-              {showProjects && (
-                <motion.h1
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    transition: { duration: 3.5, easings: "ease" },
-                  }}
-                  className="flex justify-end text-[2rem] font-bold"
-                >
-                  c
-                </motion.h1>
-              )}
-              {showProjects && (
-                <motion.h1
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    transition: { duration: 4, easings: "ease" },
-                  }}
-                  className="flex justify-end text-[2rem] font-bold"
-                >
-                  t
-                </motion.h1>
-              )}
-              {showProjects && (
-                <motion.h1
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    transition: { duration: 4.5, easings: "ease" },
-                  }}
-                  className="flex justify-end text-[2rem] font-bold"
-                >
-                  s
-                </motion.h1>
-              )}
+              {showProjects &&
+                "Projects".split("").map((text, index) => (
+                  <motion.h1
+                    key={index}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                      transition: {
+                        duration: 1 + index * 0.5,
+                        easings: "ease",
+                      },
+                    }}
+                    className="flex justify-end text-[2rem] font-bold"
+                  >
+                    {text}
+                  </motion.h1>
+                ))}
             </div>
           </div>
           <div className="cursor-pointer rounded-lg">
