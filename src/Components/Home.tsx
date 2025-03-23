@@ -7,6 +7,7 @@ import TectStack from "./TechStack/TectStack";
 import MyProject from "./MyProject/MyProject";
 import Contact from "./Contact/Contact";
 
+// Type Definitions
 type BoxShadow = {
   purple: string;
   blue: string;
@@ -17,9 +18,15 @@ type BoxShadow = {
   discordTheme: string;
 };
 
-type IsHovered = {
-  firstContainer: boolean;
-  secondContainer: boolean;
+type Container = {
+  isHovered: boolean;
+  hasBeenHovered: boolean;
+};
+
+type ContainerState = {
+  about: Container;
+  techStack: Container;
+  projects: Container;
 };
 
 const Home = () => {
@@ -33,77 +40,66 @@ const Home = () => {
     discordTheme: "rgb(88,31,149)",
   };
 
-  const [isHovered, setIsHovered] = useState<IsHovered>({
-    firstContainer: false,
-    secondContainer: false,
-  });
-  const [hasBeenHovered, setHasBeenHovered] = useState<IsHovered>({
-    firstContainer: false,
-    secondContainer: false,
+  // New container state initialization
+  const NEW_CONTAINER: Container = {
+    isHovered: false,
+    hasBeenHovered: false,
+  };
+
+  const [container, setContainer] = useState<ContainerState>({
+    about: NEW_CONTAINER,
+    techStack: NEW_CONTAINER,
+    projects: NEW_CONTAINER,
   });
 
-  const handleFirstContainerHoverStart = () => {
-    setIsHovered({
-      firstContainer: true,
-      secondContainer: false, // Ensure second container animation doesn't trigger
-    });
-
-    setHasBeenHovered((prevState) => ({
+  const handleHoverStart = (containerName: keyof ContainerState) => {
+    setContainer((prevState) => ({
       ...prevState,
-      firstContainer: true,
+      [containerName]: {
+        ...prevState[containerName],
+        isHovered: true,
+      },
     }));
   };
 
-  const handleSecondContainerHoverStart = () => {
-    setIsHovered({
-      firstContainer: false, // Ensure first container animation doesn't trigger
-      secondContainer: true,
-    });
-
-    setHasBeenHovered((prevState) => ({
+  const handleHoverEnd = (containerName: keyof ContainerState) => {
+    setContainer((prevState) => ({
       ...prevState,
-      secondContainer: true,
+      [containerName]: {
+        ...prevState[containerName],
+        isHovered: false,
+      },
     }));
   };
 
-  const handleHoverEnd = () => {
-    if (!hasBeenHovered.firstContainer && !hasBeenHovered.secondContainer) {
-      setIsHovered({
-        firstContainer: true,
-        secondContainer: true,
-      });
-    }
+  const handleContainerStart = (containerName: keyof ContainerState) => {
+    setContainer((prevState) => ({
+      ...prevState,
+      [containerName]: {
+        ...prevState[containerName],
+        hasBeenHovered: true,
+      },
+    }));
   };
+
+  const showMyTechStack = container.techStack.isHovered || container.techStack.hasBeenHovered;
+  const showProjects = container.projects.isHovered || container.projects.hasBeenHovered;
 
   return (
-    <div className="w-full h-svh flex items-center justify-center bg-black gap-2.5">
+    <div className="w-full h-svh flex items-center justify-center bg-[#000000] gap-2.5">
       <div className="flex flex-col gap-2.5">
-        <motion.div
-          whileHover={{
-            scale: 0.9,
-            boxShadow: `-1px 0px 6px 9px ${boxShadows.purple}`,
-            transition: { duration: 0.5 },
-          }}
-          animate={{
-            boxShadow: `0px 0px 0px 0px ${boxShadows.blue}`,
-            transition: { duration: 1, easings: "easeInOut" },
-          }}
-          className="w-[30rem] h-[18rem] rounded-lg cursor-pointer"
-          style={{
-            backgroundImage: `url(${AboutImg})`,
-            backgroundSize: "cover",
-            width: "30rem",
-            height: "18rem",
-          }}
+        {/* (About Section) */}
+        <div
+          
+          className="w-[30rem] h-[18rem] cursor-pointer border border-[#bb8ce4] rounded-3xl bg-gradient-to-t from-[#bb8ce49a] via-[#000000] to-[#000000] opacity-50 hover:bg-gradient-to-b hover:from-[#c69bebe5] hover:duration-500 transform hover:scale-95 hover:opacity-80 transition-all ease-in-out"
         >
-          <div className="w-full h-full rounded-lg bg-[#440c3d58] backdrop-blur-sm">
-            <About
-              title="ABOUT ME"
-              paragraph="I am a frontend developer with a passion for creating beautiful and functional websites."
-            />
-          </div>
-        </motion.div>
+          <About
+            title="ABOUT ME"
+            paragraph="I am a 2nd-year BSIT student at Ateneo de Davao University, specializing in frontend development"
+          />
+        </div>
 
+        {/* Tech Stack Section */}
         <div
           className="w-[30rem] h-[18rem] rounded-lg cursor-pointer"
           style={{
@@ -114,57 +110,48 @@ const Home = () => {
           }}
         >
           <motion.div
-            onHoverStart={handleFirstContainerHoverStart}
-            onHoverEnd={handleHoverEnd}
+            onHoverStart={() => {
+              handleHoverStart("techStack");
+              handleContainerStart("techStack");
+            }}
+            onMouseLeave={() => handleHoverEnd("techStack")}
             className="w-full h-full flex items-center justify-center rounded-lg bg-[#02031145] backdrop-blur-sm"
           >
             <div className="text-white font-mono flex flex-col absolute -left-[9rem]">
-              {(isHovered.firstContainer || hasBeenHovered.firstContainer) && (
+              {showMyTechStack && (
                 <motion.h1
-                  initial={{
-                    opacity: 0,
-                    x: 15,
-                  }}
+                  initial={{ opacity: 0, x: 15 }}
                   animate={{
                     opacity: 1,
                     x: 0,
                     transition: { duration: 1, easings: "ease" },
                   }}
-                  viewport={{ once: true }}
                   className="flex justify-end text-[3rem] font-bold"
                 >
                   My
                 </motion.h1>
               )}
-              {(isHovered.firstContainer || hasBeenHovered.firstContainer) && (
+              {showMyTechStack && (
                 <motion.h1
-                  initial={{
-                    opacity: 0,
-                    x: 15,
-                  }}
+                  initial={{ opacity: 0, x: 15 }}
                   animate={{
                     opacity: 1,
                     x: 0,
                     transition: { duration: 1.5, easings: "ease" },
                   }}
-                  viewport={{ once: true }}
                   className="flex justify-end text-[3rem] font-bold"
                 >
                   Tech
                 </motion.h1>
               )}
-              {(isHovered.firstContainer || hasBeenHovered.firstContainer) && (
+              {showMyTechStack && (
                 <motion.h1
-                  initial={{
-                    opacity: 0,
-                    x: 15,
-                  }}
+                  initial={{ opacity: 0, x: 15 }}
                   animate={{
                     opacity: 1,
                     x: 0,
                     transition: { duration: 2, easings: "ease" },
                   }}
-                  viewport={{ once: true }}
                   className="flex justify-end text-[3rem] font-bold"
                 >
                   Stack
@@ -176,172 +163,122 @@ const Home = () => {
         </div>
       </div>
 
+      {/* Second Container (Projects Section) */}
       <div className="flex flex-col gap-2.5">
         <motion.div
-          onHoverStart={handleSecondContainerHoverStart}
-          onHoverEnd={handleHoverEnd}
+          onHoverStart={() => {
+            handleHoverStart("projects");
+            handleContainerStart("projects");
+          }}
+          onHoverEnd={() => handleHoverEnd("projects")}
           className="cursor-pointer"
         >
           <div className="flex flex-row-reverse absolute left-[77rem] text-white font-mono">
             <div>
-              {(isHovered.secondContainer ||
-                hasBeenHovered.secondContainer) && (
-                  
-                  // <motion.div
-                  // initial={{
-                  //   opacity: 0,
-                  //   x: -30,
-                  // }}
-                  // animate={{
-                  //   opacity: 1,
-                  //   x: 0,
-                  //   transition: { duration: 2, easings: "ease" },
-                  // }}
-                  // viewport={{ once: true }}>
-                  //    {project.map((letters, index) => (
-                  //   <div key={index}>
-                  //     <motion.h1 className="text-[2rem] font-bold font-mono">{letters}</motion.h1>
-                  //   </div>
-                  // ))}
-                  // </motion.div>
-                  <motion.h1
-                  initial={{
-                    opacity: 0,
-                    x: -30,
-                  }}
+              {showProjects && (
+                <motion.h1
+                  initial={{ opacity: 0, x: -30 }}
                   animate={{
                     opacity: 1,
                     x: 0,
                     transition: { duration: 1, easings: "ease" },
                   }}
-                  viewport={{ once: true }}
                   className="flex justify-end text-[2rem] font-bold"
                 >
                   P
                 </motion.h1>
-              
-                 
               )}
-              {(isHovered.secondContainer || hasBeenHovered.secondContainer) && (
+              {showProjects && (
                 <motion.h1
-                  initial={{
-                    opacity: 0,
-                    x: -30,
-                  }}
+                  initial={{ opacity: 0, x: -30 }}
                   animate={{
                     opacity: 1,
                     x: 0,
                     transition: { duration: 1.5, easings: "ease" },
                   }}
-                  viewport={{ once: true }}
                   className="flex justify-end text-[2rem] font-bold"
                 >
                   r
                 </motion.h1>
               )}
-              {(isHovered.secondContainer || hasBeenHovered.secondContainer) && (
+              {showProjects && (
                 <motion.h1
-                  initial={{
-                    opacity: 0,
-                    x: -30,
-                  }}
+                  initial={{ opacity: 0, x: -30 }}
                   animate={{
                     opacity: 1,
                     x: 0,
                     transition: { duration: 2, easings: "ease" },
                   }}
-                  viewport={{ once: true }}
                   className="flex justify-end text-[2rem] font-bold"
                 >
                   o
                 </motion.h1>
               )}
-              {(isHovered.secondContainer || hasBeenHovered.secondContainer) && (
+              {showProjects && (
                 <motion.h1
-                  initial={{
-                    opacity: 0,
-                    x: -30,
-                  }}
+                  initial={{ opacity: 0, x: -30 }}
                   animate={{
                     opacity: 1,
                     x: 0,
                     transition: { duration: 2.5, easings: "ease" },
                   }}
-                  viewport={{ once: true }}
                   className="flex justify-end text-[2rem] font-bold"
                 >
                   j
                 </motion.h1>
               )}
-              {(isHovered.secondContainer || hasBeenHovered.secondContainer) && (
+              {showProjects && (
                 <motion.h1
-                  initial={{
-                    opacity: 0,
-                    x: -30,
-                  }}
+                  initial={{ opacity: 0, x: -30 }}
                   animate={{
                     opacity: 1,
                     x: 0,
                     transition: { duration: 3, easings: "ease" },
                   }}
-                  viewport={{ once: true }}
                   className="flex justify-end text-[2rem] font-bold"
                 >
                   e
                 </motion.h1>
               )}
-              {(isHovered.secondContainer || hasBeenHovered.secondContainer) && (
+              {showProjects && (
                 <motion.h1
-                  initial={{
-                    opacity: 0,
-                    x: -30,
-                  }}
+                  initial={{ opacity: 0, x: -30 }}
                   animate={{
                     opacity: 1,
                     x: 0,
                     transition: { duration: 3.5, easings: "ease" },
                   }}
-                  viewport={{ once: true }}
                   className="flex justify-end text-[2rem] font-bold"
                 >
                   c
                 </motion.h1>
               )}
-              {(isHovered.secondContainer || hasBeenHovered.secondContainer) && (
+              {showProjects && (
                 <motion.h1
-                  initial={{
-                    opacity: 0,
-                    x: -30,
-                  }}
+                  initial={{ opacity: 0, x: -30 }}
                   animate={{
                     opacity: 1,
                     x: 0,
                     transition: { duration: 4, easings: "ease" },
                   }}
-                  viewport={{ once: true }}
                   className="flex justify-end text-[2rem] font-bold"
                 >
                   t
                 </motion.h1>
               )}
-              {(isHovered.secondContainer || hasBeenHovered.secondContainer) && (
+              {showProjects && (
                 <motion.h1
-                  initial={{
-                    opacity: 0,
-                    x: -30,
-                  }}
+                  initial={{ opacity: 0, x: -30 }}
                   animate={{
                     opacity: 1,
                     x: 0,
                     transition: { duration: 4.5, easings: "ease" },
                   }}
-                  viewport={{ once: true }}
                   className="flex justify-end text-[2rem] font-bold"
                 >
                   s
                 </motion.h1>
               )}
-             
             </div>
           </div>
           <div className="cursor-pointer rounded-lg">
@@ -349,10 +286,9 @@ const Home = () => {
           </div>
         </motion.div>
 
+        {/* Contact Section */}
         <div className="w-[25rem] h-[11rem] bg-yellow-300 rounded-lg cursor-pointer">
-          <Contact 
-            title="Contact Me"
-          />
+          <Contact title="Contact Me" />
         </div>
       </div>
     </div>
