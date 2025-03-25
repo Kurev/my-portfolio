@@ -1,7 +1,7 @@
 type AboutProps = {
-  title: string;
-  paragraph: string;
-};
+  title: string
+  paragraph: string
+}
 
 const About = ({ title, paragraph }: AboutProps) => {
   return (
@@ -18,7 +18,7 @@ const About = ({ title, paragraph }: AboutProps) => {
         </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default About;
+export default About

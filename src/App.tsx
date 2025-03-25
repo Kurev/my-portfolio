@@ -1,8 +1,6 @@
 import Home from './Components/Home'
 
 function App() {
-
-
   return (
     <>
       <Home />
@@ -11,4 +9,3 @@ function App() {
 }
 
 export default App
- 
