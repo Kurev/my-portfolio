@@ -2,7 +2,7 @@ import { useState } from "react";
 import TechStackImg from "../assets/techstack1.png";
 import About from "./About/About";
 import { motion } from "framer-motion";
-import TectStack from "./TechStack/TectStack";
+import TectStack from "./TechStack/TechStack";
 import MyProject from "./MyProject/MyProject";
 import Contact from "./Contact/Contact";
 
@@ -50,6 +50,7 @@ const Home = () => {
     techStack: NEW_CONTAINER,
     projects: NEW_CONTAINER,
   });
+ 
 
   const handleHoverStart = (containerName: keyof ContainerState) => {
     setContainer((prevState) => ({
@@ -87,35 +88,28 @@ const Home = () => {
     container.projects.isHovered || container.projects.hasBeenHovered;
 
   return (
-    <div className="w-full h-svh flex items-center justify-center bg-[#000000] gap-2.5">
-      <div className="flex flex-col gap-2.5">
+    <div className="w-full h-svh flex items-center justify-center bg-[#020003] gap-2.5">
+      <div 
+       
+        className="flex flex-col gap-2.5">
         {/* (About Section) */}
-        <div className="w-[30rem] h-[18rem] cursor-pointer border border-[#bb8ce4] rounded-3xl bg-gradient-to-t from-[#bb8ce49a] via-[#000000] to-[#000000] opacity-50 hover:bg-gradient-to-b hover:from-[#c69bebe5] hover:duration-500 transform hover:scale-95 hover:opacity-80 transition-all ease-in-out">
-          <About
-            title="ABOUT ME"
-            paragraph="I am a 2nd-year BSIT student at Ateneo de Davao University, specializing in frontend development"
-          />
-        </div>
 
+        <About
+          title="ABOUT ME"
+          paragraph="I am a 2nd-year BSIT student at Ateneo de Davao University, specializing in frontend development"
+        />
+        {/*bg-[#bb8ce4] bg-[radial-gradient(circle,_rgba(187,_140,_228,_1)_0%,_rgba(0,_0,_0,_1)_69%)]  opacity-50
         {/* Tech Stack Section */}
-        <div
-          className="w-[30rem] h-[18rem] rounded-lg cursor-pointer"
-          style={{
-            backgroundImage: `url(${TechStackImg})`,
-            backgroundSize: "cover",
-            width: "30rem",
-            height: "18rem",
-          }}
-        >
+        <div className="w-[30rem] h-[18rem] rounded-2xl cursor-pointer shadow-xs shadow-[#553e68]">
           <motion.div
             onHoverStart={() => {
               handleHoverStart("techStack");
               handleContainerStart("techStack");
             }}
             onMouseLeave={() => handleHoverEnd("techStack")}
-            className="w-full h-full flex items-center justify-center rounded-lg bg-[#02031145] backdrop-blur-sm"
+            className="w-full h-full flex items-center justify-center bg-[#000000] backdrop-blur-sm rounded-2xl"
           >
-            <div className="text-white font-mono flex flex-col absolute -left-[9rem]">
+            {/* <div className="text-white font-mono flex flex-col absolute -left-[9rem]">
               {showMyTechStack &&
                 "My Tech Stack".split(" ").map((text, index) => (
                   <motion.h1
@@ -134,14 +128,14 @@ const Home = () => {
                     {text}
                   </motion.h1>
                 ))}
-            </div>
+            </div> */}
             <TectStack />
           </motion.div>
         </div>
       </div>
 
       {/* Second Container (Projects Section) */}
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col gap-2.5 rounded-2xl">
         <motion.div
           onHoverStart={() => {
             handleHoverStart("projects");
@@ -150,8 +144,8 @@ const Home = () => {
           onHoverEnd={() => handleHoverEnd("projects")}
           className="cursor-pointer"
         >
-          <div className="flex flex-row-reverse absolute left-[77rem] text-white font-mono">
-            <div>
+          {/* <div className=" text-white font-mono flex absolute z-50 px-2 py-1 bg-[#000000] rounded-3xl rounded-tl-1xl">
+            
               {showProjects &&
                 "Projects".split("").map((text, index) => (
                   <motion.h1
@@ -165,20 +159,18 @@ const Home = () => {
                         easings: "ease",
                       },
                     }}
-                    className="flex justify-end text-[2rem] font-bold"
+                    className="text-[1.5rem] font-bold"
                   >
                     {text}
                   </motion.h1>
                 ))}
-            </div>
-          </div>
-          <div className="cursor-pointer rounded-lg">
-            <MyProject />
-          </div>
+            
+          </div> */}
+          <MyProject />
         </motion.div>
 
         {/* Contact Section */}
-        <div className="w-[25rem] h-[11rem] bg-yellow-300 rounded-lg cursor-pointer">
+        <div className="w-[25rem] h-[11rem] bg-[#000000] shadow-xs shadow-[#553e68] rounded-2xl cursor-pointer flex justify-center">
           <Contact title="Contact Me" />
         </div>
       </div>

@@ -1,21 +1,65 @@
+import { PiMapPinAreaFill } from "react-icons/pi";
+import { FaGithubSquare } from "react-icons/fa";
+import { IoMdDownload } from "react-icons/io";
+import { useState } from "react";
+
 type AboutProps = {
   title: string;
   paragraph: string;
 };
 
-const About = ({ title, paragraph }: AboutProps) => {
+type IconsProps = {
+  iconHover: boolean
+}
+
+type Icons = {
+  icon: React.ReactNode;
+  title: string;
+};
+
+export const Icons = ({ iconHover}: IconsProps) => {
+  const icons: Icons[] = [
+    { icon: <IoMdDownload />, title: 'Resume' },
+    { icon: <FaGithubSquare />, title: 'Github' },
+  ];
   return (
-    <div className="group w-[30rem] h-[18rem] cursor-pointer border border-[#bb8ce4] rounded-3xl bg-gradient-to-t from-[#bb8ce49a] via-[#000000] to-[#000000] opacity-50 hover:bg-gradient-to-b hover:from-[#c69bebe5] hover:duration-500 transform hover:scale-95 hover:opacity-80 transition-all ease-in-out">
-      <div className="flex flex-col gap-2.5 p-5">
-        <h1 className="text-[5rem] text-[#a280fd] group-hover:text-[#000000] duration-1000 font-extrabold font-mono text-center">
+    <div className="flex flex-row items-center justify-center gap-7">
+      {icons.map((icons, index) => (
+        <div key={index} className={`bg-[#6f3ef4] hover:bg-[#6f3ef4b3] flex px-3 py-2 duration-500 border border-[#fff] rounded-md gap-2`}>
+          <h1 className={`text-[1.3rem] duration-500 hover:text-[#ffffff] ${iconHover ? 'text-[#ffffff]' : 'text-[#000000]'}`}>{icons.icon}</h1>
+          <p className={`text-[0.8rem]  font-mono font-bold ${iconHover ? 'text-[#ffffff]' : 'text-[#000000]'}`}>{icons.title}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const About = ({ title, paragraph}: AboutProps) => {
+  const [iconHover, setIconHover] = useState<boolean>(false);
+
+  return (
+    <div 
+    onMouseEnter={() => setIconHover(true)}
+    onMouseLeave={() => setIconHover(false)}
+    className="group rounded-2xl w-[30rem] h-[18rem] cursor-pointer shadow-xs shadow-[#553e68] bg-gradient-to-t from-[#6f3ef4] via-[#080808] to-[#000000]  hover:bg-gradient-to-b hover:from-[#6f3ef4] hover:duration-500 transform hover:scale-95 transition-all ease-in-out">
+      <div className="flex flex-col gap-2.5">
+        <h1 className="text-[5rem] text-[#6f3ef4] group-hover:text-[#000000] duration-1000 font-extrabold font-mono text-center">
           {title}
         </h1>
-        <p className="text-[1rem] text-[#ffffff] font-extrabold font-mono text-center">
-          {paragraph}
-        </p>
-        <p className="text-[1rem] text-white font-extrabold font-mono text-center mt-[2rem]">
-          Lives in: Davao City, Philippines
-        </p>
+        <div className="-mt-1 flex flex-col gap-5">
+          <p className="text-[1rem] text-[#ffffff] font-extrabold font-mono text-center">
+            {paragraph}
+          </p>
+          <div className="flex items-center justify-center gap-2 group-hover:text-white duration-500">
+            <PiMapPinAreaFill />
+            <p className="text-[0.8rem] text-white font-extrabold font-mono text-center group-hover:text-[#6f3ef4] duration-500">
+              Davao City, Philippines
+            </p>
+          </div>
+          <div>
+            <Icons iconHover={iconHover} />
+          </div>
+        </div>
       </div>
     </div>
   );
