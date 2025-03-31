@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import TectStack from "./TechStack/TechStack";
 import MyProject from "./MyProject/MyProject";
 import Contact from "./Contact/Contact";
+import { FaWindowClose } from "react-icons/fa";
 
 // Type Definitions
 type BoxShadow = {
@@ -18,14 +19,12 @@ type BoxShadow = {
 };
 
 type Container = {
-  isHovered: boolean;
-  hasBeenHovered: boolean;
+  isClick: boolean;
+  exit: boolean;
 };
 
 type ContainerState = {
   about: Container;
-  techStack: Container;
-  projects: Container;
 };
 
 const Home = () => {
@@ -39,141 +38,70 @@ const Home = () => {
     discordTheme: "rgb(88,31,149)",
   };
 
-  // New container state initialization
   const NEW_CONTAINER: Container = {
-    isHovered: false,
-    hasBeenHovered: false,
+    isClick: false,
+    exit: false,
   };
 
-  const [container, setContainer] = useState<ContainerState>({
+  const [containerAbout, setContainerAbout] = useState<ContainerState>({
     about: NEW_CONTAINER,
-    techStack: NEW_CONTAINER,
-    projects: NEW_CONTAINER,
   });
- 
 
-  const handleHoverStart = (containerName: keyof ContainerState) => {
-    setContainer((prevState) => ({
-      ...prevState,
-      [containerName]: {
-        ...prevState[containerName],
-        isHovered: true,
+  const handleOpenAbout = () => {
+    setContainerAbout((prev) => ({
+      ...prev,
+      about: {
+        ...prev.about,
+        isClick: true, // Update isClick to true
       },
     }));
   };
 
-  const handleHoverEnd = (containerName: keyof ContainerState) => {
-    setContainer((prevState) => ({
-      ...prevState,
-      [containerName]: {
-        ...prevState[containerName],
-        isHovered: false,
-      },
-    }));
-  };
-
-  const handleContainerStart = (containerName: keyof ContainerState) => {
-    setContainer((prevState) => ({
-      ...prevState,
-      [containerName]: {
-        ...prevState[containerName],
-        hasBeenHovered: true,
-      },
-    }));
-  };
-
-  const showMyTechStack =
-    container.techStack.isHovered || container.techStack.hasBeenHovered;
-  const showProjects =
-    container.projects.isHovered || container.projects.hasBeenHovered;
+  const handleCloseAbout = () => { 
+    setContainerAbout((prev) => ({
+    ...prev,
+    about: {
+      ...prev.about,
+      isClick: false, 
+      exit: true
+    },
+  }));
+};
 
   return (
-    <div className="w-full h-svh flex items-center justify-center bg-[#020003] gap-2.5">
-      <div 
-       
-        className="flex flex-col gap-2.5">
-        {/* (About Section) */}
+    <div className="w-full h-screen flex items-center justify-center bg-[#020003] gap-2.5">
+      <div className="flex flex-col gap-2.5">
+        <div onClick={handleOpenAbout}>
+          <About
+            title="ABOUT ME"
+            paragraph="I am a 2nd-year BSIT student at Ateneo de Davao University, specializing in frontend development"
+          />
+        </div>
 
-        <About
-          title="ABOUT ME"
-          paragraph="I am a 2nd-year BSIT student at Ateneo de Davao University, specializing in frontend development"
-        />
-        {/*bg-[#bb8ce4] bg-[radial-gradient(circle,_rgba(187,_140,_228,_1)_0%,_rgba(0,_0,_0,_1)_69%)]  opacity-50
-        {/* Tech Stack Section */}
         <div className="w-[30rem] h-[18rem] rounded-2xl cursor-pointer shadow-xs shadow-[#553e68]">
-          <motion.div
-            onHoverStart={() => {
-              handleHoverStart("techStack");
-              handleContainerStart("techStack");
-            }}
-            onMouseLeave={() => handleHoverEnd("techStack")}
-            className="w-full h-full flex items-center justify-center bg-[#000000] backdrop-blur-sm rounded-2xl"
-          >
-            {/* <div className="text-white font-mono flex flex-col absolute -left-[9rem]">
-              {showMyTechStack &&
-                "My Tech Stack".split(" ").map((text, index) => (
-                  <motion.h1
-                    key={index}
-                    initial={{ opacity: 0, x: 15 }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                      transition: {
-                        duration: 1 + index * 0.5,
-                        easings: "ease",
-                      },
-                    }}
-                    className="flex justify-end text-[3rem] font-bold"
-                  >
-                    {text}
-                  </motion.h1>
-                ))}
-            </div> */}
+          <div className="w-full h-full flex items-center justify-center bg-[#000000] backdrop-blur-sm rounded-2xl">
             <TectStack />
-          </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Second Container (Projects Section) */}
       <div className="flex flex-col gap-2.5 rounded-2xl">
-        <motion.div
-          onHoverStart={() => {
-            handleHoverStart("projects");
-            handleContainerStart("projects");
-          }}
-          onHoverEnd={() => handleHoverEnd("projects")}
-          className="cursor-pointer"
-        >
-          {/* <div className=" text-white font-mono flex absolute z-50 px-2 py-1 bg-[#000000] rounded-3xl rounded-tl-1xl">
-            
-              {showProjects &&
-                "Projects".split("").map((text, index) => (
-                  <motion.h1
-                    key={index}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                      transition: {
-                        duration: 1 + index * 0.5,
-                        easings: "ease",
-                      },
-                    }}
-                    className="text-[1.5rem] font-bold"
-                  >
-                    {text}
-                  </motion.h1>
-                ))}
-            
-          </div> */}
+        <div className="cursor-pointer">
           <MyProject />
-        </motion.div>
+        </div>
 
         {/* Contact Section */}
         <div className="w-[25rem] h-[11rem] bg-[#000000] shadow-xs shadow-[#553e68] rounded-2xl cursor-pointer flex justify-center">
           <Contact title="Contact Me" />
         </div>
       </div>
+      {containerAbout.about.isClick && (
+        <div className="fixed w-[45%] h-screen bg-[#0a070ec5] backdrop-blur-sm flex items-center justify-center z-50 gap-10">
+          <h1 className=" text-[#ffff] ">Hello world</h1>
+          <FaWindowClose onClick={handleCloseAbout} color="white"/>
+        </div>
+      )}
     </div>
   );
 };

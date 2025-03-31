@@ -1,7 +1,7 @@
 import React from "react";
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { FaHtml5, FaCss3Alt, FaJsSquare, FaGithubSquare } from "react-icons/fa";
+import { FaHtml5, FaCss3Alt, FaJsSquare} from "react-icons/fa";
 import { BiLogoTypescript, BiLogoTailwindCss } from "react-icons/bi";
 import { SiVitess, SiVercel } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
@@ -32,7 +32,7 @@ const techStackIcons: TechStackIcon[] = [
     icon: <TbBrandFramerMotion size={sizeIcons} />,
   },
   { title: "Vercel", icon: <SiVercel size={sizeIcons} /> },
-  { title: "Vite", icon: <SiVitess size={sizeIcons} /> },,
+  { title: "Vite", icon: <SiVitess size={sizeIcons} /> },
 ];
 
 const TechStack = () => {
