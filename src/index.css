@@ -4,3 +4,16 @@
     box-shadow: inset 5px 5px 7px #b44a4a,
             inset -1px -5px 7px #ffffff;
 }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #0A0909; /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Round corners of the scrollbar thumb */
+  }
+  
+
+  

@@ -1,11 +1,10 @@
 import { useState } from "react";
-import TechStackImg from "../assets/techstack1.png";
 import About from "./About/About";
 import { motion } from "framer-motion";
 import TectStack from "./TechStack/TechStack";
 import MyProject from "./MyProject/MyProject";
 import Contact from "./Contact/Contact";
-import { FaWindowClose } from "react-icons/fa";
+import AboutOpen from "./About/AboutOpen";
 
 // Type Definitions
 type BoxShadow = {
@@ -97,9 +96,8 @@ const Home = () => {
         </div>
       </div>
       {containerAbout.about.isClick && (
-        <div className="fixed w-[45%] h-screen bg-[#0a070ec5] backdrop-blur-sm flex items-center justify-center z-50 gap-10">
-          <h1 className=" text-[#ffff] ">Hello world</h1>
-          <FaWindowClose onClick={handleCloseAbout} color="white"/>
+        <div className="fixed w-[45%] h-screen bg-[#0a0909] backdrop-blur-lg z-50 gap-10">
+          <AboutOpen handleCloseAbout={handleCloseAbout}/>
         </div>
       )}
     </div>
