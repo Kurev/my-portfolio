@@ -1,19 +1,17 @@
 @import "tailwindcss";
 
-#boxshadow{
-    box-shadow: inset 5px 5px 7px #b44a4a,
-            inset -1px -5px 7px #ffffff;
+#boxshadow {
+  box-shadow: inset 5px 5px 7px #b44a4a,
+    inset -1px -5px 7px #ffffff;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-    width: 10px; /* Width of the scrollbar */
-  }
+  width: 10px; /* Reduced the width of the scrollbar to 1px */
   
-  ::-webkit-scrollbar-thumb {
-    background-color: #0A0909; /* Color of the scrollbar thumb */
-    border-radius: 10px; /* Round corners of the scrollbar thumb */
-  }
-  
+}
 
-  
+::-webkit-scrollbar-thumb {
+  background-color: #865bfb; 
+  border-radius: 10px;
+}
