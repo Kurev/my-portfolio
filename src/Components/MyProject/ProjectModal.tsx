@@ -71,7 +71,7 @@ export const MyProjects = () => {
       image: product1,
       title: "FurniShop",
       stack: ["HTML", "CSS", "JS", "React", "Vercel"],
-      link: "https://furnishop.vercel.app/",
+      link: "https://e-commerce-website-snowy-nine.vercel.app/",
     },
     {
       image: product2,
@@ -88,7 +88,13 @@ export const MyProjects = () => {
     >
       <div className="flex gap-7 flex-col items-center justify-center">
         {products.map((product, index) => (
-            <div className="border-2 border-[#6f3ef4] rounded-3xl w-[70%]  py-7">
+            <motion.div 
+            initial={{ opacity: 0, transform: "translateY(3%)" }}
+            animate={{ opacity: 1, transform: "translateY(0)" }}
+            exit={{ opacity: 0 }}
+            transition={{ delay: 1.3, duration: 0.5 + index * 0.5 }}
+            className="rounded-3xl border-2 border-[#ffffff07] w-[70%] py-7 bg-[#000000] backdrop-blur-md shadow-[-3px_4px_6px_0px_rgba(17,_12,_46,_0.15)]"
+>
           <a
             key={index}
             href={product.link}
@@ -96,20 +102,17 @@ export const MyProjects = () => {
             target="_blank"
             className="flex flex-col items-center justify-center"
           >
-              <motion.div
+              <div
                 key={index}
-                className="w-[15rem] h-[15rem]"
-                initial={{ opacity: 0, transform: "translateY(3%)" }}
-                animate={{ opacity: 1, transform: "translateY(0)" }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: 2, duration: 0.5 + index * 0.5 }}
+                className="w-[20rem] h-[20rem]"
+               
               >
                 <img
                   src={product.image}
                   alt={`product ${index}`}
                   className="w-full h-full object-cover rounded-3xl cursor-pointer hover:scale-105 duration-500"
                 />
-              </motion.div>
+              </div>
               <div className="w-[100%] px-[3rem] flex flex-col items-center justify-center gap-2.5">
                 <h1 className="text-[2rem] text-[#edeaf6] font-bold font-mono uppercase flex items-center justify-center mt-2.5">
                   {product.title}
@@ -118,7 +121,7 @@ export const MyProjects = () => {
                   {product.stack.map((tech, index) => (
                     <li
                       key={index}
-                      className="px-4 py-2 bg-[#a726fe] text-[0.8rem] text-[#ffffff] font-bold rounded-3xl hover:bg-[#7966ae] cursor-pointer transition duration-300"
+                      className="px-4 py-2 bg-[#6600ff] text-[0.8rem] text-[#ffffff] font-bold rounded-3xl hover:bg-[#6600ff53] cursor-pointer transition duration-300"
                     >
                       {tech}
                     </li>
@@ -126,7 +129,7 @@ export const MyProjects = () => {
                 </ul>
               </div>
           </a>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
@@ -147,7 +150,7 @@ const AboutOpen = ({ handleCloseModal }: PropsType) => {
           initial={{ opacity: 0, transform: "translateY(-100%)" }}
           animate={{ opacity: 1, transform: "translateY(0)" }}
           exit={{ opacity: 0, transform: "translateY(-100%)" }}
-          transition={{ delay: 1, duration: 0.5 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
           className="text-[2rem] text-[#f64343] hover:text-[#f6434399] duration-500F cursor-pointer"
         >
           <FaWindowClose onClick={handleCloseModal} />
@@ -157,7 +160,7 @@ const AboutOpen = ({ handleCloseModal }: PropsType) => {
         initial={{ opacity: 0, transform: "translateX(-5%)" }}
         animate={{ opacity: 1, transform: "translateY(0)" }}
         exit={{ opacity: 0, transform: "translateY(-100%)" }}
-        transition={{ delay: 1.5, duration: 0.5 }}
+        transition={{ delay: 0.8, duration: 0.5 }}
         className="text-[5rem] text-[#6f3ef4] font-bold font-mono uppercase"
       >
         Projects
