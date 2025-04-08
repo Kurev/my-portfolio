@@ -2,7 +2,7 @@ import { PiMapPinAreaFill } from "react-icons/pi";
 import { FaGithubSquare } from "react-icons/fa";
 import { IoMdDownload } from "react-icons/io";
 import { useState } from "react";
-import { ContainerState } from '../Home';
+import { ContainerState } from "../Home";
 
 type AboutProps = {
   title: string;
@@ -21,7 +21,7 @@ type Icons = {
   link?: string;
 };
 
-export const Icons = ({ iconHover, handleOpenModal }: IconsProps) => {
+export const Buttons = ({ iconHover, handleOpenModal }: IconsProps) => {
   const icons: Icons[] = [
     { icon: <IoMdDownload />, title: "Resume" },
     {
@@ -30,41 +30,37 @@ export const Icons = ({ iconHover, handleOpenModal }: IconsProps) => {
       link: "https://github.com/Kurev",
     },
   ];
+
   return (
     <div className="flex flex-row items-center justify-center gap-7">
       {icons.map((icons, index) => (
-        <div
+        <a
+          onClick={() => handleOpenModal("githubLink")}
+          href={icons.link}
+          target="_blank"
+          rel="noopener" 
           key={index}
-          className={`bg-[#6f3ef4] hover:bg-[#6f3ef4b3] flex px-3 py-2 duration-500 border border-[#fff] rounded-md gap-2`}
         >
-          <h1
-            className={`text-[1.3rem] duration-500 hover:text-[#ffffff] ${
-              iconHover ? "text-[#ffffff]" : "text-[#000000]"
-            }`}
+          <div
+            key={index}
+            className={`bg-[#6f3ef4] hover:bg-[#6f3ef4b3] group flex px-3 py-2 duration-500 border border-[#fff] rounded-md gap-2`}
           >
-            {icons.icon}
-          </h1>
-          <p
-            className={`text-[0.8rem]  font-mono font-bold ${
-              iconHover ? "text-[#ffffff]" : "text-[#000000]"
-            }`}
-          >
-            {icons.link ? (
-              <a
-                href={icons.link}
-                target="_blank"
-                rel="noopener"
-                onClick={(e) => e.stopPropagation()} // Prevent modal from opening
-              >
-                {icons.title}
-              </a>
-            ) : (
-              <span onClick={() => handleOpenModal("githubLink")}>
-                {icons.title}
-              </span>
-            )}
-          </p>
-        </div>
+            <h1
+              className={`text-[1.3rem] duration-500 hover:text-[#ffffff] ${
+                iconHover ? "text-[#ffffff]" : "text-[#000000]"
+              }`}
+            >
+              {icons.icon}
+            </h1>
+            <p
+              className={`text-[0.8rem] font-mono font-bold ${
+                iconHover ? "text-[#ffffff]" : "text-[#000000]"
+              }`}
+            >
+              <span>{icons.title}</span>
+            </p>
+          </div>
+        </a>
       ))}
     </div>
   );
@@ -77,7 +73,7 @@ const About = ({ title, paragraph, handleOpenModal }: AboutProps) => {
     <div
       onMouseEnter={() => setIconHover(true)}
       onMouseLeave={() => setIconHover(false)}
-      className="group rounded-2xl w-[30rem] h-[18rem] cursor-pointer shadow-xs shadow-[#553e68] bg-gradient-to-t from-[#6f3ef4] via-[#080808] to-[#000000]  hover:bg-gradient-to-b hover:from-[#6f3ef4] hover:duration-500 transform hover:scale-95 transition-all ease-in-out"
+      className="group rounded-2xl w-[30rem] h-[18rem] cursor-pointer shadow-xs shadow-[#553e68] bg-gradient-to-t from-[#6f3ef4] via-[#080808] to-[#000000] hover:bg-gradient-to-b hover:from-[#6f3ef4] hover:duration-500 transform hover:scale-95 transition-all ease-in-out"
     >
       <div className="flex flex-col gap-2.5">
         <h1 className="text-[5rem] text-[#6f3ef4] group-hover:text-[#000000] duration-1000 font-extrabold font-mono text-center">
@@ -94,7 +90,7 @@ const About = ({ title, paragraph, handleOpenModal }: AboutProps) => {
             </p>
           </div>
           <div>
-            <Icons handleOpenModal={handleOpenModal} iconHover={iconHover} />
+            <Buttons handleOpenModal={handleOpenModal} iconHover={iconHover} />
           </div>
         </div>
       </div>

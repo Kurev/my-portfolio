@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import About from "./About/About";
 import TectStack from "./TechStack/TechStack";
 import MyProject from "./MyProject/MyProject";
@@ -7,7 +7,6 @@ import AboutOpen from "./About/AboutModal";
 import { motion } from "motion/react";
 import ProjectModal from "./MyProject/ProjectModal";
 
-// Type Definitions
 type Container = {
   isOpen: boolean;
 };
@@ -51,6 +50,24 @@ const Home = () => {
     }));
   };
 
+  useEffect(() => {
+    const handleFocus = () => {
+      // Reset the state when the window is focused
+      setContainerAbout({
+        about: NEW_CONTAINER,
+        project: NEW_CONTAINER,
+        githubLink: NEW_CONTAINER,
+        resumeLink: NEW_CONTAINER,
+      });
+    };
+
+    window.addEventListener("focus", handleFocus);
+
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+    };
+  }, []);
+
   return (
     <div className="w-full h-screen flex items-center justify-center bg-[#020003] gap-2.5">
       <div className="flex flex-col gap-2.5">
@@ -71,7 +88,10 @@ const Home = () => {
 
       {/* Second Container (Projects Section) */}
       <div className="flex flex-col gap-2.5 rounded-2xl">
-        <div onClick={() => handleOpenModal("project")} className="cursor-pointer">
+        <div
+          onClick={() => handleOpenModal("project")}
+          className="cursor-pointer"
+        >
           <MyProject />
         </div>
 
@@ -81,9 +101,9 @@ const Home = () => {
         </div>
       </div>
 
-      {containerAbout.about.isOpen && (
+      {containerAbout.about.isOpen && !containerAbout.githubLink.isOpen && (
         <motion.div
-          initial={{ opacity: 1, scaleX: 0.70, scaleY: 0.42, x: -205, y: -150 }}
+          initial={{ opacity: 1, scaleX: 0.7, scaleY: 0.42, x: -205, y: -150 }}
           animate={{ opacity: 1, scaleX: 1, scaleY: 1, x: 0, y: 0 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
           className="fixed w-[45%] h-screen bg-[#000000e0] backdrop-blur-lg z-50 gap-10 rounded-3xl"
