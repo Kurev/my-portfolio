@@ -3,6 +3,7 @@ import { FaGithubSquare } from "react-icons/fa";
 import { IoMdDownload } from "react-icons/io";
 import { useState } from "react";
 import { ContainerState } from "../Home";
+import myHomieTony from "../../assets/homieTony.png";
 
 type AboutProps = {
   title: string;
@@ -23,7 +24,9 @@ type Icons = {
 
 export const Buttons = ({ iconHover, handleOpenModal }: IconsProps) => {
   const icons: Icons[] = [
-    { icon: <IoMdDownload />, title: "Resume" },
+    { icon: <IoMdDownload />, 
+      link: myHomieTony,
+      title: "Resume" },
     {
       icon: <FaGithubSquare />,
       title: "Github",
@@ -34,7 +37,37 @@ export const Buttons = ({ iconHover, handleOpenModal }: IconsProps) => {
   return (
     <div className="flex flex-row items-center justify-center gap-7">
       {icons.map((icons, index) => (
-        <a
+
+        icons.title === 'Resume' ?  (
+          <a
+          onClick={() => handleOpenModal("resumeLink")}
+          href={icons.link}
+          target="_blank"
+          rel="noopener" 
+          key={index}
+        >
+          <div
+            key={index}
+            className={`bg-[#6f3ef4] hover:bg-[#6f3ef4b3] group flex px-3 py-2 duration-500 border border-[#fff] rounded-md gap-2`}
+          >
+            <h1
+              className={`text-[1.3rem] duration-500 hover:text-[#ffffff] ${
+                iconHover ? "text-[#ffffff]" : "text-[#000000]"
+              }`}
+            >
+              {icons.icon}
+            </h1>
+            <p
+              className={`text-[0.8rem] font-mono font-bold ${
+                iconHover ? "text-[#ffffff]" : "text-[#000000]"
+              }`}
+            >
+              <span>{icons.title}</span>
+            </p>
+          </div>
+        </a>
+        ) :  (
+          <a
           onClick={() => handleOpenModal("githubLink")}
           href={icons.link}
           target="_blank"
@@ -61,6 +94,10 @@ export const Buttons = ({ iconHover, handleOpenModal }: IconsProps) => {
             </p>
           </div>
         </a>
+        )
+
+
+        
       ))}
     </div>
   );

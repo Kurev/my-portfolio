@@ -9,18 +9,20 @@ import ProjectModal from "./MyProject/ProjectModal";
 
 type Container = {
   isOpen: boolean;
+  shes: boolean;
 };
 
 export type ContainerState = {
   about: Container;
   project: Container;
-  githubLink: Container; // to resolve the bug if I click the github link it will not open the modal
+  githubLink: Container;
   resumeLink: Container;
 };
 
 const Home = () => {
   const NEW_CONTAINER: Container = {
     isOpen: false,
+    shes: true,
   };
 
   const [containerAbout, setContainerAbout] = useState<ContainerState>({
@@ -52,21 +54,37 @@ const Home = () => {
 
   useEffect(() => {
     const handleFocus = () => {
-      // Reset the state when the window is focused
-      setContainerAbout({
-        about: NEW_CONTAINER,
-        project: NEW_CONTAINER,
+      setContainerAbout((prev) => ({
+        ...prev,
         githubLink: NEW_CONTAINER,
         resumeLink: NEW_CONTAINER,
-      });
+      }));
     };
 
-    window.addEventListener("focus", handleFocus);
+    const wowwankokabalo = () => {
+      setContainerAbout((prev) => ({
+        ...prev,
+        about: NEW_CONTAINER,
+        project: NEW_CONTAINER,
+      }));
+    };
+
+    const wowsagol = () => {
+      if (!containerAbout.githubLink.isOpen || !containerAbout.resumeLink.isOpen) {
+        handleFocus();
+      } 
+      
+      if (containerAbout.about.isOpen || containerAbout.project.isOpen) {
+        wowwankokabalo();
+      }
+    };
+
+    window.addEventListener("focus", wowsagol);
 
     return () => {
-      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("focus", wowsagol);
     };
-  }, []);
+  }, [containerAbout.githubLink.isOpen, containerAbout.resumeLink.isOpen]); // added dependencies to keep it updated
 
   return (
     <div className="w-full h-screen flex items-center justify-center bg-[#020003] gap-2.5">
@@ -86,16 +104,11 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Second Container (Projects Section) */}
       <div className="flex flex-col gap-2.5 rounded-2xl">
-        <div
-          onClick={() => handleOpenModal("project")}
-          className="cursor-pointer"
-        >
+        <div onClick={() => handleOpenModal("project")} className="cursor-pointer">
           <MyProject />
         </div>
 
-        {/* Contact Section */}
         <div className="w-[25rem] h-[11rem] bg-[#000000] shadow-xs shadow-[#553e68] rounded-2xl cursor-pointer flex justify-center">
           <Contact title="Contact Me" />
         </div>
