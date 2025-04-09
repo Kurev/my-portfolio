@@ -32,14 +32,24 @@ const Home = () => {
     resumeLink: NEW_CONTAINER,
   });
 
+  const checkOpenAbout =
+    containerAbout.about.isOpen && !containerAbout.githubLink.isOpen;
+  const checkProjectAbout = containerAbout.project.isOpen;
+
   const handleOpenModal = (containerName: keyof ContainerState) => {
-    setContainerAbout((prev) => ({
-      ...prev,
-      [containerName]: {
-        ...prev[containerName],
-        isOpen: true,
-      },
-    }));
+    const isAnyOpen = Object.values(containerAbout).some(
+      (container) => container.isOpen
+    );
+
+    if (!isAnyOpen) {
+      setContainerAbout((prev) => ({
+        ...prev,
+        [containerName]: {
+          ...prev[containerName],
+          isOpen: true,
+        },
+      }));
+    }
   };
 
   const handleCloseModal = (containerName: keyof ContainerState) => {
@@ -70,11 +80,15 @@ const Home = () => {
     };
 
     const wowsagol = () => {
-      if (!containerAbout.githubLink.isOpen || !containerAbout.resumeLink.isOpen) {
-        handleFocus();
-      } 
       
-      if (containerAbout.about.isOpen || containerAbout.project.isOpen) {
+      const handleLink:boolean = !containerAbout.githubLink.isOpen || !containerAbout.resumeLink.isOpen;
+      const handleContainers:boolean = containerAbout.about.isOpen || containerAbout.project.isOpen;
+
+      if (handleLink) {
+        handleFocus();
+      }
+
+      if (handleContainers) {
         wowwankokabalo();
       }
     };
@@ -85,6 +99,8 @@ const Home = () => {
       window.removeEventListener("focus", wowsagol);
     };
   }, [containerAbout.githubLink.isOpen, containerAbout.resumeLink.isOpen]); // added dependencies to keep it updated
+
+  useEffect(() => {}, []);
 
   return (
     <div className="w-full h-screen flex items-center justify-center bg-[#020003] gap-2.5">
@@ -105,7 +121,10 @@ const Home = () => {
       </div>
 
       <div className="flex flex-col gap-2.5 rounded-2xl">
-        <div onClick={() => handleOpenModal("project")} className="cursor-pointer">
+        <div
+          onClick={() => handleOpenModal("project")}
+          className="cursor-pointer"
+        >
           <MyProject />
         </div>
 
@@ -114,7 +133,7 @@ const Home = () => {
         </div>
       </div>
 
-      {containerAbout.about.isOpen && !containerAbout.githubLink.isOpen && (
+      {checkOpenAbout && (
         <motion.div
           initial={{ opacity: 1, scaleX: 0.7, scaleY: 0.42, x: -205, y: -150 }}
           animate={{ opacity: 1, scaleX: 1, scaleY: 1, x: 0, y: 0 }}
@@ -125,7 +144,7 @@ const Home = () => {
         </motion.div>
       )}
 
-      {containerAbout.project.isOpen && (
+      {checkProjectAbout && (
         <motion.div
           initial={{ opacity: 1, scaleX: 0.58, scaleY: 0.57, x: 248, y: -92 }}
           animate={{ opacity: 1, scaleX: 1, scaleY: 1, x: 0, y: 0 }}
