@@ -110,7 +110,7 @@ const About = ({ title, paragraph, handleOpenModal }: AboutProps) => {
     <div
       onMouseEnter={() => setIconHover(true)}
       onMouseLeave={() => setIconHover(false)}
-      className="group rounded-2xl w-[30rem] h-[18rem] cursor-pointer shadow-xs shadow-[#553e68] bg-gradient-to-t from-[#6f3ef4] via-[#080808] to-[#000000] hover:bg-gradient-to-b hover:from-[#6f3ef4] hover:duration-500 transform hover:scale-95 transition-all ease-in-out"
+      className="group rounded-2xl w-[30rem] h-[18rem] cursor-pointer shadow-xs border-[#6f3ef46e] border-2 bg-gradient-to-t from-[#6f3ef4] via-[#080808] to-[#000000] hover:bg-gradient-to-b hover:from-[#6f3ef4] hover:duration-500 transform hover:scale-95 transition-all ease-in-out"
     >
       <div className="flex flex-col gap-2.5">
         <h1 className="text-[5rem] text-[#6f3ef4] group-hover:text-[#000000] duration-1000 font-extrabold font-mono text-center">

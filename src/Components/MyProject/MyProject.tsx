@@ -22,7 +22,7 @@ const MyProject = () => {
     }, [])
 
     return (
-        <div className='w-[25rem] h-[25rem] rounded-2xl overflow-hidden relative shadow-xs shadow-[#553e68]'>
+        <div className='w-[25rem] h-[25rem] rounded-2xl overflow-hidden relative shadow-xs border-[#6f3ef46e] border-2'>
             {/* First Image from products1 */}
             <motion.div
                 className='absolute inset-0 flex justify-center items-center'

@@ -6,10 +6,10 @@ import Contact from "./Contact/Contact";
 import AboutOpen from "./About/AboutModal";
 import { motion } from "motion/react";
 import ProjectModal from "./MyProject/ProjectModal";
+import GmailForms from "./Contact/GmailForms";
 
 type Container = {
   isOpen: boolean;
-  shes: boolean;
 };
 
 export type ContainerState = {
@@ -17,12 +17,12 @@ export type ContainerState = {
   project: Container;
   githubLink: Container;
   resumeLink: Container;
+  gmailForm: Container;
 };
 
 const Home = () => {
   const NEW_CONTAINER: Container = {
     isOpen: false,
-    shes: true,
   };
 
   const [containerAbout, setContainerAbout] = useState<ContainerState>({
@@ -30,6 +30,7 @@ const Home = () => {
     project: NEW_CONTAINER,
     githubLink: NEW_CONTAINER,
     resumeLink: NEW_CONTAINER,
+    gmailForm: NEW_CONTAINER,
   });
 
   const checkOpenAbout =
@@ -80,9 +81,10 @@ const Home = () => {
     };
 
     const wowsagol = () => {
-      
-      const handleLink:boolean = !containerAbout.githubLink.isOpen || !containerAbout.resumeLink.isOpen;
-      const handleContainers:boolean = containerAbout.about.isOpen || containerAbout.project.isOpen;
+      const handleLink: boolean =
+        !containerAbout.githubLink.isOpen || !containerAbout.resumeLink.isOpen;
+      const handleContainers: boolean =
+        containerAbout.about.isOpen || containerAbout.project.isOpen;
 
       if (handleLink) {
         handleFocus();
@@ -100,8 +102,6 @@ const Home = () => {
     };
   }, [containerAbout.githubLink.isOpen, containerAbout.resumeLink.isOpen]); // added dependencies to keep it updated
 
-  useEffect(() => {}, []);
-
   return (
     <div className="w-full h-screen flex items-center justify-center bg-[#020003] gap-2.5">
       <div className="flex flex-col gap-2.5">
@@ -113,7 +113,7 @@ const Home = () => {
           />
         </div>
 
-        <div className="w-[30rem] h-[18rem] rounded-2xl cursor-pointer shadow-xs shadow-[#553e68]">
+        <div className="w-[30rem] h-[18rem] rounded-2xl cursor-pointer shadow-xs border-[#6f3ef46e] border-2">
           <div className="w-full h-full flex items-center justify-center bg-[#000000] backdrop-blur-sm rounded-2xl">
             <TectStack />
           </div>
@@ -128,8 +128,8 @@ const Home = () => {
           <MyProject />
         </div>
 
-        <div className="w-[25rem] h-[11rem] bg-[#000000] shadow-xs shadow-[#553e68] rounded-2xl cursor-pointer flex justify-center">
-          <Contact title="Contact Me" />
+        <div className="w-[25rem] h-[11rem] bg-[#000000] shadow-xs border-[#6f3ef46e] border-2 rounded-2xl cursor-pointer flex justify-center">
+          <Contact title="Contact Me" handleOpenModal={handleOpenModal} />
         </div>
       </div>
 
@@ -153,6 +153,18 @@ const Home = () => {
         >
           <ProjectModal handleCloseModal={() => handleCloseModal("project")} />
         </motion.div>
+      )}
+
+      {containerAbout.gmailForm.isOpen && (
+        <div className="fixed flex bg-[#0a090bbd] backdrop-blur-lg items-center justify-center w-full h-screen z-50">
+          <motion.div 
+          initial={{ opacity: 0, translateY: -100 }}
+          animate={{ opacity: 1, translateY: 0  }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+          className="fixed w-[35%] h-[35rem] bg-[#0a090b] backdrop-blur-lg z-50 gap-10 rounded-3xl flex flex-col items-center justify-center border-[#6f3ef46e] border-2"> 
+            <GmailForms handleCloseModal={() => handleCloseModal("gmailForm")}/>
+          </motion.div>
+        </div>
       )}
     </div>
   );
