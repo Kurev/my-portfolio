@@ -93,7 +93,7 @@ export const MyProjects = () => {
             animate={{ opacity: 1, transform: "translateY(0)" }}
             exit={{ opacity: 0 }}
             transition={{ delay: 1.3, duration: 0.5 + index * 0.5 }}
-            className="rounded-3xl border-2 border-[#ffffff07] w-[70%] py-7 bg-[#000000] backdrop-blur-md shadow-[-3px_4px_6px_0px_rgba(17,_12,_46,_0.15)]"
+            className="rounded-3xl w-[70%] py-7 bg-[#000000] backdrop-blur-md border-2 border-[#6f3ef42b]"
 >
           <a
             key={index}
