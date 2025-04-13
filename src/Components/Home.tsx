@@ -7,6 +7,7 @@ import AboutOpen from "./About/AboutModal";
 import { motion } from "motion/react";
 import ProjectModal from "./MyProject/ProjectModal";
 import GmailForms from "./Contact/GmailForms";
+import Apps from "./TabletToMobile/Apps";
 
 type Container = {
   isOpen: boolean;
@@ -102,8 +103,22 @@ const Home = () => {
     };
   }, [containerAbout.githubLink.isOpen, containerAbout.resumeLink.isOpen]); // added dependencies to keep it updated
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleSizeChange = () => {
+      setWindowWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleSizeChange);
+    }
+  }, [])
+
   return (
-    <div className="w-full h-screen flex items-center justify-center bg-[#020003] gap-2.5">
+
+    windowWidth > 1068 ? (
+      <div className="w-full h-screen flex items-center justify-center bg-[#020003] gap-2.5">
       <div className="flex flex-col gap-2.5">
         <div onClick={() => handleOpenModal("about")}>
           <About
@@ -166,7 +181,19 @@ const Home = () => {
           </motion.div>
         </div>
       )}
+
+      
     </div>
+    ) : (
+      <div className="w-full h-screen flex items-center flex-col justify-center bg-[#020003] gap-2.5 px-[5%] md:px-[10%]">
+        <h1 className="text-[5rem] text-[#6f3ef46e] font-mono font-bold uppercase">Apps</h1>
+        <div className="w-full h-[60vh] flex items-center justify-center border-2 border-[#6f3ef46e] rounded-2xl">
+          <Apps />
+        </div>
+      </div>
+
+    )
+    
   );
 };
 
